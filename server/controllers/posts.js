@@ -45,4 +45,16 @@ router.delete('/:id', function(req, res, next) {
     });
 });
 
+//Replaces a post with the given id
+router.put('/:id', function(req, res, next) {
+    var id = req.params.id;
+    Post.replaceOne({_id: id}, function(err, post) {
+        if (err) { return next(err); }
+        if (post === null) {
+            return res.status(404).json({'message': 'Post not found'});
+        }
+        res.json(post);
+    });
+});
+
 module.exports = router;

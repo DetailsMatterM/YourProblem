@@ -43,4 +43,16 @@ router.delete('/:id', function(req, res, next) {
     });
 });
 
+//Replaces a camel with the given id
+router.put('/:id', function(req, res, next) {
+    var id = req.params.id;
+    Camel.replaceOne({_id: id}, function(err, camel) {
+        if (err) { return next(err); }
+        if (camel === null) {
+            return res.status(404).json({'message': 'Camel not found'});
+        }
+        res.json(camel);
+    });
+});
+
 module.exports = router;

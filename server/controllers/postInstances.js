@@ -43,4 +43,16 @@ router.delete('/:id', function(req, res, next) {
     });
 });
 
+//Replaces a PostInstance with the given id
+router.put('/:id', function(req, res, next) {
+    var id = req.params.id;
+    PostInstance.replaceOne({_id: id}, function(err, postInstance) {
+        if (err) { return next(err); }
+        if (postInstance === null) {
+            return res.status(404).json({'message': 'PostInstance not found'});
+        }
+        res.json(postInstance);
+    });
+});
+
 module.exports = router;

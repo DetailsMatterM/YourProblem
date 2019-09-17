@@ -45,4 +45,16 @@ router.delete('/:id', function (req, res, next) {
     });
 });
 
+//Replaces an admin with the given id
+router.put('/:id', function(req, res, next) {
+    var id = req.params.id;
+    Admin.replaceOne({_id: id}, function(err, admin) {
+        if (err) { return next(err); }
+        if (admin === null) {
+            return res.status(404).json({'message': 'Admin not found'});
+        }
+        res.json(admin);
+    });
+});
+
 module.exports = router;

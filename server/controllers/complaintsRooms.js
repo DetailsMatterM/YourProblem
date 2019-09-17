@@ -43,4 +43,16 @@ router.delete('/:id', function(req, res, next) {
     });
 });
 
+//Replaces a post with the given id
+router.put('/:id', function(req, res, next) {
+    var id = req.params.id;
+    complaintsRoom.replaceOne({_id: id}, function(err, complaintsRoom) {
+        if (err) { return next(err); }
+        if (complaintsRoom === null) {
+            return res.status(404).json({'message': 'Room not found'});
+        }
+        res.json(complaintsRoom);
+    });
+});
+
 module.exports = router;

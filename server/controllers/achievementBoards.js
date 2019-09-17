@@ -43,4 +43,17 @@ router.delete('/:id', function(req, res, next) {
     });
 });
 
+
+//Replaces an achievement board with the given id
+router.put('/:id', function(req, res, next) {
+    var id = req.params.id;
+    AchievementBoard.replaceOne({_id: id}, function(err, achievementBoard) {
+        if (err) { return next(err); }
+        if (achievementBoard === null) {
+            return res.status(404).json({'message': 'Achievement Board not found'});
+        }
+        res.json(achievementBoard);
+    });
+});
+
 module.exports = router;
