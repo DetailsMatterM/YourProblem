@@ -6,7 +6,8 @@ var userSchema = new Schema({
     age: { type: Number },
     email: { type: String },
     password: { type: Number },
-    posts: { type: Schema.Types.ObjectId, ref: 'Post'}
+    posts: [{ type: Schema.Types.ObjectId, ref: 'post'}],
+    achievements: [{ type: Schema.Types.ObjectId, ref: 'achievement'}]
 });
 
 module.exports = mongoose.model('users', userSchema);
