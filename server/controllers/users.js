@@ -10,7 +10,6 @@ router.get('/', function (req, res, next) {
     });
 });
 
-//create a new user
 router.post('/', function (req, res, next) {
     var user = new User(req.body);
     user.save(function (err) {

@@ -10,8 +10,10 @@ var camelsController = require('./controllers/camels');
 var postsController = require('./controllers/posts');
 var adminsController = require('./controllers/admins');
 var usersController = require('./controllers/users');
-
-
+var achievementsController = require('./controllers/achievements');
+var postInstanceController = require('./controllers/postInstances');
+var achievementBoardController = require('./controllers/achievementBoards');
+var complaintsRoomController = require('./controllers/complaintsRooms');
 
 // Variables
 var mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/yourproblem';
@@ -45,6 +47,10 @@ app.use('/api/camels', camelsController);
 app.use('/api/posts', postsController);
 app.use('/api/users', usersController);
 app.use('/api/admins', adminsController);
+app.use('/api/achievements', achievementsController);
+app.use('/api/postInstances', postInstanceController);
+app.use('/api/achievementBoards', achievementBoardController);
+app.use('/api/complaintsRooms', complaintsRoomController);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {
