@@ -1,5 +1,6 @@
 This application is a forum for posting complaints using the MEVN stack.
 The problems will be rated by other users by upvotes and downvotes, as well as a ranking system where users can climb ranks.
+
 Contributors: Fredrik Ullman, Mikael Jansson, Moritz Denke
 
 # Backend and Frontend Template
