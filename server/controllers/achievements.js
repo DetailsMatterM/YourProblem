@@ -43,3 +43,18 @@ router.put('/:id', function(req, res, next) {
 });
 
 module.exports = router;
+
+//Update an achievments values by id
+router.patch('/:id', function(req, res, next) {
+    var id = req.params.id;
+    Achievement.findById(id, function(err, user) {
+        if(err) { return next(err); }
+        if (achievement == null) {
+            return res.status(404).json({"message": "Achievement not found"});
+        }
+        achievement.name = (req.body.name || post.name);
+        achievement.description = (req.body.description || user.description);
+        achievement.save();
+        res.json(achievement);
+    });  
+});

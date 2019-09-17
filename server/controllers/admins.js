@@ -58,3 +58,20 @@ router.put('/:id', function(req, res, next) {
 });
 
 module.exports = router;
+
+//Update an admins values by id
+router.patch('/:id', function(req, res, next) {
+    var id = req.params.id;
+    Admin.findById(id, function(err, user) {
+        if(err) { return next(err); }
+        if (admin == null) {
+            return res.status(404).json({"message": "Admin not found"});
+        }
+        admin.userName = (req.body.userName || post.userName);
+        admin.age = (req.body.age || user.age);
+        admin.email = (req.body.email || user.email);
+        admin.password = (req.body.password || user.password);
+        admin.save();
+        res.json(admin);
+    });  
+});

@@ -58,3 +58,18 @@ router.put('/:id', function(req, res, next) {
 });
 
 module.exports = router;
+
+//Update a posts values by id
+router.patch('/:id', function(req, res, next) {
+    var id = req.params.id;
+    Post.findById(id, function(err, user) {
+        if(err) { return next(err); }
+        if (post == null) {
+            return res.status(404).json({"message": "Post not found"});
+        }
+        post.title = (req.body.title || post.title);
+        post.text = (req.body.text || user.text);
+        post.save();
+        res.json(post);
+    });  
+});

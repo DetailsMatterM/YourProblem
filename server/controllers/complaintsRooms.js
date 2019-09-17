@@ -56,3 +56,17 @@ router.put('/:id', function(req, res, next) {
 });
 
 module.exports = router;
+
+//Update a complaintsrooms values by id
+router.patch('/:id', function(req, res, next) {
+    var id = req.params.id;
+    ComplaintsRoom.findById(id, function(err, user) {
+        if(err) { return next(err); }
+        if (complaintsRoom == null) {
+            return res.status(404).json({"message": "Room not found"});
+        }
+        complaintsRoom.maxUsers = (req.body.maxUsers || post.maxUsers);
+        complaintsRoom.save();
+        res.json(complaintsRoom);
+    });  
+});
