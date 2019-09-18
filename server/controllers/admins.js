@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 // Create a new admin
 router.post('/', function (req, res, next) {
     var admin = new Admin(req.body);
-    admins.save(function (err) {
+    admin.save(function (err) {
         if (err) {
             return next(err);
         }
@@ -21,10 +21,11 @@ router.post('/', function (req, res, next) {
     });
 });
 
-// Return the admin with the given ID
+
+//Delete the admin with the given ID
 router.delete('/:id', function (req, res, next) {
     var id = req.params.id;
-    Admin.findById(id, function (err, admin) {
+    Admin.findOneAndDelete({ _id: id }, function (err, admin) {
         if (err) { return next(err); }
         if (admin === null) {
             return res.status(404).json({ 'message': 'Admin not found' });
@@ -34,9 +35,8 @@ router.delete('/:id', function (req, res, next) {
 });
 
 //Delete the admin with the given ID
-router.delete('/:id', function (req, res, next) {
-    var id = req.params.id;
-    Admin.findOneAndDelete({ _id: id }, function (err, admin) {
+router.delete('/', function (req, res, next) {
+    Admin.deleteMany( {}, function (err, admin) {
         if (err) { return next(err); }
         if (admin === null) {
             return res.status(404).json({ 'message': 'Admin not found' });

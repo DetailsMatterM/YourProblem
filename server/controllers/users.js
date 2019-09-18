@@ -56,6 +56,7 @@ router.put('/:id', function(req, res, next) {
 });
 module.exports = router;
 
+//Update a users values by id
 router.patch('/:id', function(req, res, next) {
     var id = req.params.id;
     User.findById(id, function(err, user) {
