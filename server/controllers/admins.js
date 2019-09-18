@@ -34,17 +34,6 @@ router.delete('/:id', function (req, res, next) {
     });
 });
 
-//Delete the admin with the given ID
-router.delete('/', function (req, res, next) {
-    Admin.deleteMany( {}, function (err, admin) {
-        if (err) { return next(err); }
-        if (admin === null) {
-            return res.status(404).json({ 'message': 'Admin not found' });
-        }
-        res.json(admin);
-    });
-});
-
 //Replaces an admin with the given id
 router.put('/:id', function(req, res, next) {
     var id = req.params.id;

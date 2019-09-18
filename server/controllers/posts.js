@@ -33,6 +33,17 @@ router.get('/:id', function(req, res, next) {
     });
 });
 
+//Delete all posts
+router.delete('/', function (req, res, next) {
+    Post.deleteMany( {}, function (err, post) {
+        if (err) { return next(err); }
+        if (post === null) {
+            return res.status(404).json({ 'message': 'Posts not found' });
+        }
+        res.json(post);
+    });
+});
+
 //Deletes a post with the given id
 router.delete('/:id', function(req, res, next) {
     var id = req.params.id;

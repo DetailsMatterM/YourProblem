@@ -43,6 +43,17 @@ router.delete('/:id', function(req, res, next) {
     });
 });
 
+//Delete all rooms
+router.delete('/', function (req, res, next) {
+    ComplaintsRoom.deleteMany( {}, function (err, complaintsRoom) {
+        if (err) { return next(err); }
+        if (complaintsRoom === null) {
+            return res.status(404).json({ 'message': 'Rooms not found' });
+        }
+        res.json(complaintsRoom);
+    });
+});
+
 //Replaces a post with the given id
 router.put('/:id', function(req, res, next) {
     var id = req.params.id;
