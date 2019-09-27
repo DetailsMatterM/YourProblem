@@ -4,8 +4,9 @@ var AchievementBoard = require('../models/achievementBoard');
 
 // Return a list of all achievementBoards
 router.get('/', function(req, res, next) {
-    AchievementBoard.find(function(err, achievementBoard) {
+    AchievementBoard.find(function(err, achievementBoards) {
         if (err) { return next(err); }
+        if (achievementBoards.length == 0) { return res.status(404).json({ 'message': 'Boards not found' }); }
         res.json({'achievementsBoards': achievementBoard});
     });
 });

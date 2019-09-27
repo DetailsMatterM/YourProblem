@@ -6,6 +6,7 @@ var Achievement = require('../models/achievement');
 router.get('/', function (req, res, next) {
     Achievement.find(function (err, achievements) {
         if (err) { return next(err); }
+        if (achievements.length == 0) { return res.status(404).json({ 'message': 'Achievements not found' }); }
         res.json({ 'achievements': achievements });
     });
 });
@@ -19,6 +20,7 @@ router.post('/', function (req, res, next) {
     });
 });
 
+// Get specific achievement
 router.get('/:id', function (req, res, next) {
     var id = req.params.id;
     Achievement.findById(id, function (err, achievement) {
@@ -42,8 +44,6 @@ router.put('/:id', function(req, res, next) {
     });
 });
 
-module.exports = router;
-
 //Update an achievments values by id
 router.patch('/:id', function(req, res, next) {
     var id = req.params.id;
@@ -58,3 +58,6 @@ router.patch('/:id', function(req, res, next) {
         res.json(achievement);
     });  
 });
+
+module.exports = router;
+

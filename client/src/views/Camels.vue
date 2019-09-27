@@ -3,7 +3,12 @@
     <h1>List of {{ camels.length }} camels</h1>
     <b-button type="button" class="createButton" @click="createCamel()">Create Camel</b-button>
     <b-list-group>
-      <camel-item v-for="camel in camels" :key="camel._id" :camel="camel" @delete-camel="deleteCamel"></camel-item>
+      <camel-item
+        v-for="camel in camels"
+        :key="camel._id"
+        :camel="camel"
+        @delete-camel="deleteCamel"
+      ></camel-item>
     </b-list-group>
   </div>
 </template>

@@ -6,6 +6,7 @@ var PostInstance = require('../models/postInstance');
 router.get('/', function(req, res, next) {
     PostInstance.find(function(err, postInstances) {
         if (err) {return next(err); }
+        if (postInstances.length == 0) { return res.status(404).json({ 'message': 'postInstances not found' }); }
         res.json({'postInstances': postInstances});
     });
 });

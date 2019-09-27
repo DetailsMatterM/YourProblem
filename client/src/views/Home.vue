@@ -3,6 +3,7 @@
     <b-jumbotron header="DIT341 Frontend" lead="Welcome to Your DIT341 Frontend Vue.js App">
       <p>Message from the server: {{ message }}</p>
       <b-button variant="primary" href="/camels">List Camels</b-button>
+      <b-button variant="primary" href="/users">List Users</b-button>
     </b-jumbotron>
     <b-container>
       <b-row>
