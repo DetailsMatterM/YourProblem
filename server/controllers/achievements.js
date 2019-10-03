@@ -33,30 +33,30 @@ router.get('/:id', function (req, res, next) {
 });
 
 //Replaces an achievement with the given id
-router.put('/:id', function(req, res, next) {
+router.put('/:id', function (req, res, next) {
     var id = req.params.id;
-    Achievement.replaceOne({_id: id}, function(err, achievement) {
+    Achievement.replaceOne({ _id: id }, { changed: req.body.changed, description: req.body.description }, function (err, achievement) {
         if (err) { return next(err); }
         if (achievement === null) {
-            return res.status(404).json({'message': 'Achievement not found'});
+            return res.status(404).json({ 'message': 'Achievement not found' });
         }
         res.json(achievement);
     });
 });
 
 //Update an achievments values by id
-router.patch('/:id', function(req, res, next) {
+router.patch('/:id', function (req, res, next) {
     var id = req.params.id;
-    Achievement.findById(id, function(err, user) {
-        if(err) { return next(err); }
+    Achievement.findById(id, function (err, achievement) {
+        if (err) { return next(err); }
         if (achievement == null) {
-            return res.status(404).json({"message": "Achievement not found"});
+            return res.status(404).json({ "message": "Achievement not found" });
         }
         achievement.name = (req.body.name || post.name);
         achievement.description = (req.body.description || user.description);
         achievement.save();
         res.json(achievement);
-    });  
+    });
 });
 
 module.exports = router;

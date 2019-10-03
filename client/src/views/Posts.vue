@@ -1,10 +1,17 @@
 <template>
-  <div class="posts">
+  <div class="posts col-md">
     <div class="jumbotron">
       <h1>What's New ?</h1>
     </div>
+
     <b-list-group>
-      <post-item v-for="post in posts" :key="post._id" :post="post" @delete-post="deletePost"></post-item>
+      <post-item
+        v-for="post in posts"
+        :key="post._id"
+        :post="post"
+        @edit-post="editPost"
+        @delete-post="deletePost"
+      ></post-item>
     </b-list-group>
   </div>
 </template>
@@ -47,6 +54,9 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    editPost(id) {
+      Api.patch(`/posts/${id}`);
     },
     createPost() {
       var title = document.getElementById("titleId").value;

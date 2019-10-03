@@ -2,6 +2,8 @@
 
 This [Vue.js](https://vuejs.org/) template provides sample code how to connect to the ExpressJS backend.
 
+
+
 ## Requirements
 
 * [Server](../server/README.md) backend running on `http://localhost:3000`

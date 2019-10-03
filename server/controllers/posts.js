@@ -72,7 +72,7 @@ router.delete('/:id', function (req, res, next) {
 //Replaces a post with the given id
 router.put('/:id', function (req, res, next) {
     var id = req.params.id;
-    Post.replaceOne({ _id: id }, function (err, post) {
+    Post.replaceOne({ _id: id }, { changed: req.body.changed, description: req.body.description }, function (err, post) {
         if (err) { return next(err); }
         if (post === null) {
             return res.status(404).json({ 'message': 'Post not found' });
@@ -84,13 +84,14 @@ router.put('/:id', function (req, res, next) {
 //Update a posts values by id
 router.patch('/:id', function (req, res, next) {
     var id = req.params.id;
-    Post.findById(id, function (err, user) {
+    Post.findById(id, function (err, post) {
         if (err) { return next(err); }
         if (post == null) {
             return res.status(404).json({ "message": "Post not found" });
         }
-        post.title = (req.body.title || post.title);
-        post.text = (req.body.text || user.text);
+        // post.title = (req.body.title || post.title);
+        post.title = "newest title ";
+        post.text = (req.body.text || post.text);
         post.save();
         res.json(post);
     });

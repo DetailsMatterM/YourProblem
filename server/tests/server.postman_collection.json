@@ -1,33 +1,1610 @@
 {
 	"info": {
-		"_postman_id": "f1f0dc69-72ef-44ee-9bda-dfac8a907469",
-		"name": "server",
+		"_postman_id": "a9aa4778-e67a-4f27-b13c-422bc4d79960",
+		"name": "Server",
+		"description": "server side postman tests for web & app development\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "GET /api",
-			"event": [
+			"name": "Achievements",
+			"item": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "c67a5d47-3a70-45b0-8001-b37eb933382f",
-						"exec": [
-							""
+					"name": "Create an achievement",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b6fe51f1-1e4e-4a77-81bc-b1037126446e",
+								"exec": [
+									"",
+									"var jsonData = pm.response.json();",
+									"var achievementId = jsonData._id",
+									"pm.environment.set(\"achievement_id\", achievementId);",
+									"",
+									"",
+									"var getachievementId = pm.variables.get(\"achievement_id\");",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Body has _id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData._id).to.be.a('String');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
 						],
-						"type": "text/javascript"
-					}
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"PostMaster\",\n\"description\":\"You've posted 10000 posts! \"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/achievements/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"achievements",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all achievements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/achievements?=",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"achievements"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one Achievement",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/achievements/{{achievement_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"achievements",
+								"{{achievement_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Replaces an Achievment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"changed\",\n    \"description\": \"You've posted one fredrik posts! \",\n    \"__v\": 0\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/achievements/{{achievement_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"achievements",
+								"{{achievement_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Updates an Achievment",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"changed\",\n\"description\":\"You've posted one mizzillion posts! \"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/achievements/{{achievement_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"achievements",
+								"{{achievement_id}}"
+							]
+						}
+					},
+					"response": []
 				}
 			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d4cf160-29ed-4548-976b-1bbb1a1872cf",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var userId = jsonData._id",
+									"pm.environment.set(\"user_id\", userId);",
+									"",
+									"// 3) Use variable in later requests via {{variable}}",
+									"// GET {{host}}/api/camels/{{camel_id}}",
+									"var getUserId = pm.variables.get(\"user_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"Fred\",\n\t\"age\": 23,\n\t\"email\": \"fred@live.se\",\n\t\"password\": 1234,\n\t\"posts\": [],\n\t\"achievments\": []\n\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Display all users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"posts\":[]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Display One User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/users/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create post as a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6beed922-7e48-49af-8e79-00e05dd12e79",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var userPostId = jsonData._id",
+									"pm.environment.set(\"userPost_id\", userPostId);",
+									"",
+									"var getUserPostId = pm.variables.get(\"userPost_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\" : \"first post\",\n\t\"text\" : \"some text lorem \"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/users/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Display specific post of specific user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/users/{{user_id}}/posts/{{userPost_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"posts",
+								"{{userPost_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Display all posts from a user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/users/{{user_id}}/posts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete users post",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/users/{{user_id}}/posts/{{userPost_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"posts",
+								"{{userPost_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"Updated User\",\n\t\"age\": 23,\n\t\"email\": \"fred@live.se\",\n\t\"password\": 1234,\n\t\"posts\": [],\n\t\"achievments\": []\n\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/users/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "AchievementBoards",
+			"item": [
+				{
+					"name": "Creates an achievementBoard",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fd9c031f-f01e-480a-adfc-f5bbd3bab598",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var achievementBoardId = jsonData._id",
+									"pm.environment.set(\"achievementBoard_id\", achievementBoardId);",
+									"",
+									"var getAchievementBoardId = pm.variables.get(\"achievementBoard_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"achievement\":[]\n\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/achievementBoards",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"achievementBoards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all achievementBoards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/achievementBoards",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"achievementBoards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete AchievementBoard",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/achievementBoards/{{achievementBoard_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"achievementBoards",
+								"{{achievementBoard_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update AchievementBoard",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/achievementBoards/{{achievementBoard_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"achievementBoards",
+								"{{achievementBoard_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one achievementBoard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/achievementBoards/{{achievementBoard_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"achievementBoards",
+								"{{achievementBoard_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Create post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "976c0ff8-a875-4b18-8a4f-63d285a2339e",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var postId = jsonData._id",
+									"pm.environment.set(\"post_id\", postId);",
+									"",
+									"var getPostId = pm.variables.get(\"post_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"title\":\"first post\",\n\"text\": \"some text\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/posts/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Display a post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/posts/{{post_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"{{post_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Display all Posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/posts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete post",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/posts/{{post_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"{{post_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Display sorted posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/posts/sorted",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"sorted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all posts",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/posts/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Replace post",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\": \"5d8e1c9157db3f6e2c39bd26\",\n    \"title\": \"Replaced  post\",\n    \"text\": \"new text\",\n    \"__v\": 0\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/posts/{{post_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"{{post_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update post",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\": \"5d8e1c9157db3f6e2c39bd26\",\n    \"title\": \"Updated post\",\n    \"text\": \"some text\",\n    \"__v\": 0\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/posts/{{post_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"{{post_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "complaintsRoom",
+			"item": [
+				{
+					"name": "Create a Room",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9311ceb7-8900-4e28-89dd-fb83584b4c05",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var complaintsRoomId = jsonData._id",
+									"pm.environment.set(\"complaintsRoom_id\", complaintsRoomId);",
+									"",
+									"var getComplaintsRoomId = pm.variables.get(\"complaintsRoom_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n    {\n    \"users\":[],\n    \"maxUsers\":30,\n    \"userCount\":25\n    }"
+						},
+						"url": {
+							"raw": "{{host}}/api/complaintsRooms",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"complaintsRooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all rooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/complaintsRooms",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"complaintsRooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one Room",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33cdf7cf-f783-4acb-a864-ed26ecab80ae",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/complaintsRooms/{{complaintsRoom_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"complaintsRooms",
+								"{{complaintsRoom_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete one room",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/complaintsRooms/{{complaintsRoom_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"complaintsRooms",
+								"{{complaintsRoom_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all rooms",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/complaintsRooms/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"complaintsRooms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Replace one room",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n    {\n    \"users\":[],\n    \"maxUsers\":10,\n    \"userCount\":15\n    }"
+						},
+						"url": {
+							"raw": "{{host}}/api/complaintsRooms/{{complaintsRoom_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"complaintsRooms",
+								"{{complaintsRoom_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a room",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n    {\n    \"users\":[],\n    \"maxUsers\":90,\n    \"userCount\":15\n    }"
+						},
+						"url": {
+							"raw": "{{host}}/api/complaintsRooms/{{complaintsRoom_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"complaintsRooms",
+								"{{complaintsRoom_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a post in a room",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c023f49-85db-4e1e-a7bc-f73ee3767526",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var roomPostId = jsonData._id",
+									"pm.environment.set(\"roomPost_id\", roomPostId);",
+									"",
+									"var getComplaintsRoomId = pm.variables.get(\"roomPost_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\" : \"first post\",\n\t\"text\" : \"some text lorem \"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/complaintsRooms/{{complaintsRoom_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"complaintsRooms",
+								"{{complaintsRoom_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all posts of a room",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/complaintsRooms/{{complaintsRoom_id}}/posts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"complaintsRooms",
+								"{{complaintsRoom_id}}",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Admins",
+			"item": [
+				{
+					"name": "Create an Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c45b7638-d946-4c80-b730-7f81b53a2c86",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var adminId = jsonData._id",
+									"pm.environment.set(\"admin_id\", adminId);",
+									"",
+									"var getAdminId = pm.variables.get(\"admin_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n\t\"userName\":\"fredrik\",\n\t\"age\": 26,\n\t\"email\": \"fredrikullman@live.se\",\n\t\"password\": \"1234\"\n\t\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/admins",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"admins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get admins",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/admins",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"admins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one Admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/admins/{{admin_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"admins",
+								"{{admin_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Admin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/admins/{{admin_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"admins",
+								"{{admin_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\":\"NewAdminName\",\n\t\"age\": 26,\n\t\"email\": \"fredrikullman@live.se\",\n\t\"password\": \"1234\"\n\t\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/admins/{{admin_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"admins",
+								"{{admin_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Replace Admin",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\":\"ReplacedTheWholeThing\",\n\t\"age\": 26,\n\t\"email\": \"fredrikullman@live.se\",\n\t\"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/admins/{{admin_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"admins",
+								"{{admin_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Camels",
+			"item": [
+				{
+					"name": "Create camel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d95ebc91-9ea0-42eb-b69f-f739e3e20318",
+								"exec": [
+									"// Save and read environment variables",
+									"",
+									"// 1) Create an environment in Postman:",
+									"// https://www.getpostman.com/docs/v6/postman/environments_and_globals/manage_environments",
+									"",
+									"// 2) Save reponse data in environment variable",
+									"var jsonData = pm.response.json();",
+									"var camelId = jsonData._id",
+									"pm.environment.set(\"camel_id\", camelId);",
+									"",
+									"// 3) Use variable in later requests via {{variable}}",
+									"// GET {{host}}/api/camels/{{camel_id}}",
+									"var getCamelId = pm.variables.get(\"camel_id\");",
+									"",
+									"// Test assertion examples",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Body has correct color and position\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.color).to.eql(\"orange\");",
+									"    pm.expect(jsonData.position).to.eql(7);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"color\": \"orange\",\n\t\"position\": 7\n}\n"
+						},
+						"url": {
+							"raw": "{{host}}/api/camels?=",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"camels"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get camel",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"username\":\"fredrik\",\n\"age\":26,\n\"email\":\"lalala\",\n\"posts\": [],\n\"achievements\":[]\n\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/camels/{{camel_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"camels",
+								"{{camel_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete camel",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"username\":\"fredrik\",\n\"age\":26,\n\"email\":\"lalala\",\n\"posts\": [],\n\"achievements\":[]\n\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/camels/{{camel_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"camels",
+								"{{camel_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get camels",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "09388393-8b43-4e69-b6bc-45fe443a24df",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"camel_id\", jsonData._id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"username\":\"fredrik\",\n\"age\":26,\n\"email\":\"lalala\",\n\"posts\": [],\n\"achievements\":[]\n\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/camels?=",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"camels"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "\n\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Replaces a camel",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"position\": \"2\",\n\t\"color\": \"newestColor\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/camels/{{camel_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"camels",
+								"{{camel_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "postInstance",
+			"item": [
+				{
+					"name": "Create a postInstance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "08d3de12-d5da-4b59-94eb-275c219c20e3",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var postInstanceId = jsonData._id",
+									"pm.environment.set(\"postInstance_id\", postInstanceId);",
+									"",
+									"var getPostInstanceId = pm.variables.get(\"postInstance_id\");",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"timeStamp\": \"fri 27/10-2019\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/postInstances",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"postInstances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all instances",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/postInstances",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"postInstances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one instance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/postInstances/{{postInstance_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"postInstances",
+								"{{postInstance_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete one instance",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/api/postInstances/{{postInstance_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"postInstances",
+								"{{postInstance_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Replace one instance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\": \"5d8e1bd857db3f6e2c39bd23\",\n    \"timeStamp\": \"saturyay 27/10-2019\",\n    \"__v\": 0\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/postInstances/{{postInstance_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"postInstances",
+								"{{postInstance_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get standard api message",
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "{{host}}/api",
 					"host": [
@@ -39,172 +1616,13 @@
 				}
 			},
 			"response": []
-		},
-		{
-			"name": "POST /api/camels",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "927025af-5584-4888-a286-730662635095",
-						"exec": [
-							"// Save and read environment variables",
-							"",
-							"// 1) Create an environment in Postman:",
-							"// https://www.getpostman.com/docs/v6/postman/environments_and_globals/manage_environments",
-							"",
-							"// 2) Save reponse data in environment variable",
-							"var jsonData = pm.response.json();",
-							"var camelId = jsonData._id",
-							"pm.environment.set(\"camel_id\", camelId);",
-							"",
-							"// 3) Use variable in later requests via {{variable}}",
-							"// GET {{host}}/api/camels/{{camel_id}}",
-							"var getCamelId = pm.variables.get(\"camel_id\");",
-							"",
-							"// Test assertion examples",
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
-							"});",
-							"",
-							"pm.test(\"Body has correct color and position\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.color).to.eql(\"orange\");",
-							"    pm.expect(jsonData.position).to.eql(7);",
-							"});",
-							"",
-							"pm.test(\"Body has _id\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData._id).to.be.a('String');",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"type": "text",
-						"value": "application/json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"color\": \"orange\",\n\t\"position\": 7\n}\n"
-				},
-				"url": {
-					"raw": "{{host}}/api/camels",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"camels"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": ""
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET /api/camels",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "927025af-5584-4888-a286-730662635095",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"url": {
-					"raw": "{{host}}/api/camels",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"camels"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": ""
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET /api/camels/:id",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "927025af-5584-4888-a286-730662635095",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{host}}/api/camels/{{camel_id}}",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"camels",
-						"{{camel_id}}"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "7e800163-8a55-4e5e-9612-c424073c185b",
+				"id": "3bbe5bc4-18be-4745-81e0-5c954e8e5545",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -214,7 +1632,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "ee0c97da-ae53-475a-9016-45bcfd424105",
+				"id": "9b4f8738-d641-43a3-9ebd-4ab67b21eb31",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -224,10 +1642,18 @@
 	],
 	"variable": [
 		{
-			"id": "cd185905-a834-4211-8030-583d17702534",
+			"id": "88f0d1f5-364f-423d-9771-f712855cb34d",
 			"key": "host",
 			"value": "http://localhost:3000",
 			"type": "string"
+		},
+		{
+			"id": "5279609a-13e1-4049-a8cd-bd8b45633e12",
+			"key": "5279609a-13e1-4049-a8cd-bd8b45633e12",
+			"value": "",
+			"type": "string",
+			"disabled": true
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

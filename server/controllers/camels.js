@@ -3,53 +3,53 @@ var router = express.Router();
 var Camel = require('../models/camel');
 
 // Return a list of all camels
-router.get('/', function(req, res, next) {
-    Camel.find(function(err, camels) {
+router.get('/', function (req, res, next) {
+    Camel.find(function (err, camels) {
         if (err) { return next(err); }
-        res.json({'camels': camels});
+        res.json({ 'camels': camels });
     });
 });
 
 // Create a new camel
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
     var camel = new Camel(req.body);
-    camel.save(function(err) {
+    camel.save(function (err) {
         if (err) { return next(err); }
         res.status(201).json(camel);
     });
 });
 
 // Return the camel with the given ID
-router.get('/:id', function(req, res, next) {
+router.get('/:id', function (req, res, next) {
     var id = req.params.id;
-    Camel.findById(id, function(err, camel) {
+    Camel.findById(id, function (err, camel) {
         if (err) { return next(err); }
         if (camel === null) {
-            return res.status(404).json({'message': 'Camel not found'});
+            return res.status(404).json({ 'message': 'Camel not found' });
         }
         res.json(camel);
     });
 });
 
 // Delete the camel with the given ID
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', function (req, res, next) {
     var id = req.params.id;
-    Camel.findOneAndDelete({_id: id}, function(err, camel) {
+    Camel.findOneAndDelete({ _id: id }, function (err, camel) {
         if (err) { return next(err); }
         if (camel === null) {
-            return res.status(404).json({'message': 'Camel not found'});
+            return res.status(404).json({ 'message': 'Camel not found' });
         }
         res.json(camel);
     });
 });
 
 //Replaces a camel with the given id
-router.put('/:id', function(req, res, next) {
+router.put('/:id', function (req, res, next) {
     var id = req.params.id;
-    Camel.replaceOne({_id: id}, function(err, camel) {
+    Camel.replaceOne({ _id: id }, { changed: req.body.changed, description: req.body.description }, function (err, camel) {
         if (err) { return next(err); }
         if (camel === null) {
-            return res.status(404).json({'message': 'Camel not found'});
+            return res.status(404).json({ 'message': 'Camel not found' });
         }
         res.json(camel);
     });

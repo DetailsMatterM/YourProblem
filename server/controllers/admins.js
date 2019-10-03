@@ -11,6 +11,18 @@ router.get('/', function (req, res, next) {
     });
 });
 
+//Returns the post with given id
+router.get('/:id', function (req, res, next) {
+    var id = req.params.id;
+    Admin.findById(id, function (err, admin) {
+        if (err) { return next(err); }
+        if (admin === null) {
+            return res.status(404).json({ 'message': 'Admin not found' });
+        }
+        res.json(admin);
+    });
+});
+
 // Create a new admin
 router.post('/', function (req, res, next) {
     var admin = new Admin(req.body);
@@ -35,24 +47,24 @@ router.delete('/:id', function (req, res, next) {
 });
 
 //Replaces an admin with the given id
-router.put('/:id', function(req, res, next) {
+router.put('/:id', function (req, res, next) {
     var id = req.params.id;
-    Admin.replaceOne({_id: id}, function(err, admin) {
+    Admin.replaceOne({ _id: id }, { changed: req.body.changed, description: req.body.description }, function (err, admin) {
         if (err) { return next(err); }
         if (admin === null) {
-            return res.status(404).json({'message': 'Admin not found'});
+            return res.status(404).json({ 'message': 'Admin not found' });
         }
         res.json(admin);
     });
 });
 
 //Update an admins values by id
-router.patch('/:id', function(req, res, next) {
+router.patch('/:id', function (req, res, next) {
     var id = req.params.id;
-    Admin.findById(id, function(err, user) {
-        if(err) { return next(err); }
+    Admin.findById(id, function (err, admin) {
+        if (err) { return next(err); }
         if (admin == null) {
-            return res.status(404).json({"message": "Admin not found"});
+            return res.status(404).json({ "message": "Admin not found" });
         }
         admin.userName = (req.body.userName || post.userName);
         admin.age = (req.body.age || user.age);
@@ -60,7 +72,7 @@ router.patch('/:id', function(req, res, next) {
         admin.password = (req.body.password || user.password);
         admin.save();
         res.json(admin);
-    });  
+    });
 });
 
 module.exports = router;

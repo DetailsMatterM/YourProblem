@@ -6,7 +6,7 @@ var Post = require('../models/post');
 //Return a list of users 
 router.get('/', function (req, res, next) {
     User.find(function (err, users) {
-        if (err) {return next(err);}
+        if (err) { return next(err); }
         if (users.length == 0) { return res.status(404).json({ 'message': 'Users not found' }); }
         res.json({ 'users': users });
     });
@@ -32,7 +32,7 @@ router.get('/:id', function (req, res, next) {
         res.json(user);
     });
 });
-//returns all posts of one user 
+//returns all posts
 router.get('/:id/posts', function (req, res, next) {
     var id = req.params.id;
     User.findById(id, function (err, user) {
@@ -68,7 +68,7 @@ router.delete('/:id/posts/:id', function (req, res, next) {
         if (post === null) {
             return res.status(404).json({ 'message': 'Post not found' });
         }
-        res.json({'message' : 'post deleted'});
+        res.json({ 'message': 'post deleted' });
         post.delete();
     });
 });
@@ -77,18 +77,6 @@ router.delete('/:id/posts/:id', function (req, res, next) {
 router.delete('/:id', function (req, res, next) {
     var id = req.params.id;
     User.findOneAndDelete({ _id: id }, function (err, user) {
-        if (err) { return next(err); }
-        if (user === null) {
-            return res.status(404).json({ 'message': 'User not found' });
-        }
-        res.json(user);
-    });
-});
-
-//Replaces a user with the given id
-router.put('/:id', function (req, res, next) {
-    var id = req.params.id;
-    User.find({ _id: id }, function (err, user) {
         if (err) { return next(err); }
         if (user === null) {
             return res.status(404).json({ 'message': 'User not found' });
@@ -123,7 +111,7 @@ router.post('/:id', function (req, res, next) {
         if (foundUser == null) {
             return res.status(404).json({ "message": "User not found" });
         }
-        if (err) { return next (err); } 
+        if (err) { return next(err); }
         post.save(function (err, savedPost) {
             if (err) return err;
             foundUser.posts.push(savedPost._id);

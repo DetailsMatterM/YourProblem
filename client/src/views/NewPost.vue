@@ -1,12 +1,13 @@
 <template>
-  <div class>
-    <h1>Create new post</h1>
+  <div class="col-md">
+    <div id="post">
+      <h1>list of {{users.length}} users</h1>
 
-    <div>
+      <h1>Create new post</h1>
       <b-container>
         <form class="postform" action="/posts">
           <b-form-input name="title" placeholder="Enter a title" id="titleId"></b-form-input>
-          <b-form-input name="text" placeholder="Write your text" id="textId"></b-form-input>
+          <b-textarea name="text" placeholder="Write your text" id="textId"></b-textarea>
 
           <input
             type="submit"
@@ -22,17 +23,20 @@
 
 <script>
 import { Api } from "@/Api";
-import PostItem from "@/components/PostItem";
+import UserItem from "@/components/UserItem";
 
 export default {
+  props: "users",
   name: "Posts",
   data() {
     return {
-      posts: []
+      posts: [],
+      users: []
     };
   },
   mounted() {
     this.getPosts();
+    this.getUsers();
   },
   methods: {
     getPosts() {
@@ -46,6 +50,30 @@ export default {
         })
         .then(() => {
           // This code is always executed (after success or error).
+        });
+    },
+    getUsers() {
+      Api.get("users")
+        .then(response => {
+          this.users = response.data.users;
+        })
+        .catch(error => {
+          this.users = [];
+          console.log(error);
+        })
+        .then(() => {
+          // This code is always executed (after success or error).
+        });
+    },
+    getUser(id) {
+      Api.get(`/users/${id}`)
+        .then(response => {
+          console.log(response.data.message);
+          var index = this.users.findIndex(users => users._id === id);
+          this.users = response.data.users;
+        })
+        .catch(error => {
+          console.log(error);
         });
     },
     deletePost(id) {
@@ -66,26 +94,29 @@ export default {
         title: title,
         text: text
       };
+
       Api.post("/posts", randomPost)
         .then(response => {
           this.posts.push(response.data);
+          console.log(data);
         })
         .catch(error => {
           console.log(error);
         });
     }
   },
-
   components: {
-    PostItem
+    UserItem
   }
 };
 </script>
 
 <style >
-.posts {
-  align-content: center;
-  padding: 0em 20em 0em 20em;
+h1 {
+  margin-bottom: 2em;
+}
+#post {
+  margin-top: 10em;
 }
 #postbtn {
   margin-top: 2em;
@@ -96,10 +127,14 @@ export default {
 #textId {
   margin: auto;
   margin-top: 10px;
-  width: 30em;
-  height: 10em;
+  /* width: 30em;
+  height: 10em; */
 }
 #titleId {
+  width: 30em;
+  margin: auto;
+}
+#usernameId {
   width: 30em;
   margin: auto;
 }
