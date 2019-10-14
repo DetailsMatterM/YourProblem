@@ -5,6 +5,7 @@ import Posts from './views/Posts.vue'
 import NewPost from './views/NewPost.vue'
 import Rooms from './views/Rooms.vue'
 import NewRoom from './views/NewRoom.vue'
+import FoundRoom from './views/FoundRoom.vue'
 
 Vue.use(Router)
 
@@ -37,6 +38,11 @@ export default new Router({
       path: '/NewRoom',
       name: 'newRoom',
       component: NewRoom
+    },
+    {
+      path: '/FoundRoom',
+      name: 'foundRoom',
+      component: FoundRoom
     }
   ]
 })

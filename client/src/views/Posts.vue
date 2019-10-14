@@ -3,7 +3,7 @@
     <div class="jumbotron">
       <h1>What's New ?</h1>
     </div>
-
+    <b-button type="button" @click="deleteAll()">Delete All</b-button>
     <b-list-group>
       <post-item
         v-for="post in posts"
@@ -17,68 +17,70 @@
 </template>
 
 <script>
-import { Api } from "@/Api";
-import PostItem from "@/components/PostItem";
+import { Api } from '@/Api';
+import PostItem from '@/components/PostItem';
 
 export default {
-  name: "Posts",
+  name: 'Posts',
   data() {
     return {
       posts: []
-    };
+    }
   },
   mounted() {
-    this.getPosts();
+    this.getPosts()
   },
   methods: {
     getPosts() {
-      Api.get("posts")
+      Api.get('posts')
         .then(response => {
-          this.posts = response.data.posts;
+          this.posts = response.data.posts
         })
         .catch(error => {
-          this.posts = [];
-          console.log(error);
-        })
-        .then(() => {
-          // This code is always executed (after success or error).
-        });
+          this.posts = []
+          console.log(error)
+        })        
     },
     deletePost(id) {
       Api.delete(`/posts/${id}`)
         .then(response => {
-          console.log(response.data.message);
-          var index = this.posts.findIndex(post => post._id === id);
-          this.posts.splice(index, 1);
+          console.log(response.data.message)
+          var index = this.posts.findIndex(post => post._id === id)
+          this.posts.splice(index, 1)
         })
         .catch(error => {
-          console.log(error);
-        });
+          console.log(error)
+        })
+    },
+    deleteAll() {
+      Api.delete('/posts').then(() => {
+        this.$router.go()
+      })
     },
     editPost(id) {
-      Api.patch(`/posts/${id}`);
+      Api.patch(`/posts/${id}`)
     },
     createPost() {
-      var title = document.getElementById("titleId").value;
-      var text = document.getElementById("textId").value;
+      var title = document.getElementById('titleId').value
+      var text = document.getElementById('textId').value
       var randomPost = {
         title: title,
         text: text
-      };
-      Api.post("/posts", randomPost)
+      }
+      Api.post('/posts', randomPost)
         .then(response => {
-          this.posts.push(response.data);
+          this.posts.push(response.data)
         })
         .catch(error => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     }
   },
 
   components: {
     PostItem
   }
-};
+}
 </script>
 
 <style >

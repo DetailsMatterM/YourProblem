@@ -1,12 +1,13 @@
 <template>
   <b-list-group-item :style="{ title: room.name }">
+    <b-button type="button" class="close" @click="$emit('delete-room', room._id)">&times;</b-button>
     <h3>{{ room.name}}</h3>
+    <b-button type="button" @click="resetRoom()">Reset</b-button>    
     <div class = "postsInRoom">
       <b-list-group>
         <post-item v-for="post in posts" :key="post._id" :post="post" @delete-post="deletePost"></post-item>
       </b-list-group>
     </div>
-    <b-button type="button" class="close" @click="$emit('delete-room', room._id)">&times;</b-button>
   </b-list-group-item>
 </template>
 
@@ -28,17 +29,7 @@ export default {
   },
   methods: {
     getPosts() {
-      Api.get('posts')
-        .then(response => {
-          this.posts = response.data.posts
-        })
-        .catch(error => {
-          this.posts = []
-          console.log(error)
-        })
-        .then(() => {
-          // This code is always executed (after success or error).
-        })
+      this.posts = this.room.posts;    
     },
     deletePost(id) {
       Api.delete(`/posts/${id}`)
@@ -46,10 +37,20 @@ export default {
           console.log(response.data.message)
           var index = this.posts.findIndex(post => post._id === id)
           this.posts.splice(index, 1)
+          Api.patch(`/rooms/${this.room._id}`, this.posts);
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    resetRoom() {
+      Api.put(`/rooms/${this.room._id}`, {
+        name: this.room.name,
+        users: [],
+        posts: []
+      }).then(response => {
+        this.$router.go();
+      })
     },
     createPost() {
       var title = document.getElementById('titleId').value

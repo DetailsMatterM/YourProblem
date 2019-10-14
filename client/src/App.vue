@@ -7,13 +7,13 @@
       <router-link
         tag="button"
         to="/newPost"
-        id="newPostbtn"
+        id="newbtn"
         class="btn btn-outline-primary"
       >New post</router-link>
       <router-link
         tag="button"
         to="/newRoom"
-        id="newRoombtn"
+        id="newbtn"
         class="btn btn-outline-primary"
       >New room</router-link>
     </div>
@@ -41,10 +41,10 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-#newPostbtn {
+#newbtn {
   float: right;
+  margin-right: 0.5em;
+
 }
-#newRoombtn {
-  float: right;
-}
+
 </style>

@@ -70,15 +70,15 @@ router.delete('/', function (req, res, next) {
         if (err) { return next(err); }
         if (room === null) {
             return res.status(404).json({ 'message': 'Rooms not found' });
-        }R
+        }
         res.json(room);
     });
 });
 
 //Replaces a room with the given id
 router.put('/:id', function (req, res, next) {
-    var id = req.params.id;
-    Room.replaceOne({ _id: id }, { changed: req.body.changed, description: req.body.description }, function (err, room) {
+    var id = req.params.id;    
+    Room.replaceOne({ _id: id }, { name: req.body.name, users: req.body.users, posts: req.body.posts }, function (err, room) {
         if (err) { return next(err); }
         if (room === null) {
             return res.status(404).json({ 'message': 'Room not found' });
@@ -90,14 +90,15 @@ router.put('/:id', function (req, res, next) {
 //Update a rooms values by id
 router.patch('/:id', function (req, res, next) {
     var id = req.params.id;
-    Room.findById(id, function (err, user) {
+    var updatedPosts = req.body;
+    Room.findById(id, function (err, foundRoom) {
         if (err) { return next(err); }
-        if (room == null) {
+        if (foundRoom == null) {
             return res.status(404).json({ "message": "Room not found" });
-        }
-        room.maxUsers = (req.body.maxUsers || post.maxUsers);
-        room.save();
-        res.json(room);
+        }        
+        foundRoom.posts = updatedPosts;
+        foundRoom.save();
+        res.json(foundRoom);
     });
 });
 
@@ -113,7 +114,7 @@ router.post('/:id', function (req, res, next) {
         if (err) { return next(err); }
         post.save(function (err, savedPost) {
             if (err) return err;
-            foundRoom.posts.push(savedPost._id);
+            foundRoom.posts.push(savedPost);
             foundRoom.save();
         });
         res.json(post);
