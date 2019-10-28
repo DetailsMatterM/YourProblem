@@ -41,7 +41,7 @@
 import { Api } from '@/Api'
 
 export default {
-  props: 'users',
+  props: ['users'],
   name: 'Posts',
   data() {
     return {
@@ -51,8 +51,7 @@ export default {
       selectedUserId: null,
       options: [],
       userOptions: [],
-      posts: [],
-      users: []
+      posts: []
     }
   },
   mounted() {
@@ -106,8 +105,6 @@ export default {
           console.log(error)
         })
     },
-    // we have to use model binding instead
-    // we have made it in a way that we can't rebind it
     createPost() {
       var newPost = {
         title: this.title,
@@ -118,6 +115,9 @@ export default {
       Api.post(`/rooms/${this.selectedRoomId}`, newPost)
         .then(() => {
           this.$router.push('/')
+        })
+        .catch(error => {
+          console.log(error)
         })
     }
   }

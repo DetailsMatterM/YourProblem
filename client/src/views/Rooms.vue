@@ -4,7 +4,6 @@
       <h1>Browse Rooms</h1>
     </div>
     <form action="/rooms" id="findRoom">
-      <input v-model="roomName" placeholder="Enter a room's name" id="roomNameId" />
       <b-button class="form-group" @click="getRoom()">Search Room</b-button>
     </form>
     <b-button class="deleteButton" @click="deleteAll()">Delete All</b-button>
@@ -81,19 +80,6 @@ export default {
       Api.delete('/rooms').then(() => {
         this.$router.go()
       })
-    },
-    createRoom() {
-      var name = document.getElementById('nameId').value
-      var randomRoom = {
-        name: name
-      }
-      Api.post('/rooms', randomRoom)
-        .then(response => {
-          this.rooms.push(response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
     }
   },
 

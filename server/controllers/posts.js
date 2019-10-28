@@ -17,6 +17,9 @@ router.get('/', function (req, res, next) {
 router.get('/sorted', function (req, res, next) {
     Post.find(function (err, posts) {
         if (err) { return next(err); }
+        if (posts === null) {
+            return res.status(404).json({ 'message': 'Post not found' });
+        }
         posts.reverse();
         res.json({ 'posts': posts });
     });
@@ -89,7 +92,6 @@ router.patch('/:id', function (req, res, next) {
         if (post == null) {
             return res.status(404).json({ "message": "Post not found" });
         }
-        // post.title = (req.body.title || post.title);
         post.title = "newest title ";
         post.text = (req.body.text || post.text);
         post.save();

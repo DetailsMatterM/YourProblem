@@ -7,7 +7,6 @@
       <label  for="age">Age :</label>
       <input v-model="age" placeholder="Enter your age" id="ageId" />
       <b-button type="button" class="form-group" @click="createUser()">Create User</b-button>
-      <b-button type="button" class="form-group" @click="getUser()">Get User</b-button>
     </form>
     <b-list-group>
       <user-item v-for="user in users" :key="user._id" :user="user" @delete-user="deleteUser"></user-item>
@@ -39,34 +38,7 @@ export default {
         })
         .catch(error => {
           this.users = []
-
           console.log(error)
-        })
-        .then(() => {
-          // This code is always executed (after success or error).
-        })
-    },
-    getUser(username) {
-      Api.get('users')
-        .then(reponse => {
-          this.users = reponse.data.users
-          var i
-          console.log(username)
-          for (i = 0; i < this.users.length; i++) {
-            if (this.users[i].username === username) {
-              console.log(this.users[i].username)
-              this.$router.go()
-              // return this.users[i] no idea if we need this
-            }
-          }
-        })
-        .catch(error => {
-          this.users = []
-
-          console.log(error)
-        })
-        .then(() => {
-          // This code is always executed (after success or error).
         })
     },
     deleteUser(id) {

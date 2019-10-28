@@ -9,7 +9,6 @@
         v-for="post in posts"
         :key="post._id"
         :post="post"
-        @edit-post="editPost"
         @delete-post="deletePost"
       ></post-item>
     </b-list-group>
@@ -17,8 +16,8 @@
 </template>
 
 <script>
-import { Api } from '@/Api';
-import PostItem from '@/components/PostItem';
+import { Api } from '@/Api'
+import PostItem from '@/components/PostItem'
 
 export default {
   name: 'Posts',
@@ -39,7 +38,7 @@ export default {
         .catch(error => {
           this.posts = []
           console.log(error)
-        })        
+        })
     },
     deletePost(id) {
       Api.delete(`/posts/${id}`)
@@ -56,24 +55,6 @@ export default {
       Api.delete('/posts').then(() => {
         this.$router.go()
       })
-    },
-    editPost(id) {
-      Api.patch(`/posts/${id}`)
-    },
-    createPost() {
-      var title = document.getElementById('titleId').value
-      var text = document.getElementById('textId').value
-      var randomPost = {
-        title: title,
-        text: text
-      }
-      Api.post('/posts', randomPost)
-        .then(response => {
-          this.posts.push(response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
     }
   },
 

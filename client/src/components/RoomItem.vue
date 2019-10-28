@@ -25,10 +25,10 @@ export default {
     }
   },
   mounted() {
-    this.getPosts()
+    this.getPosts()    
   },
   methods: {
-    getPosts() {
+    getPosts() {      
       this.posts = this.room.posts;    
     },
     deletePost(id) {
@@ -51,6 +51,9 @@ export default {
       }).then(response => {
         this.$router.go();
       })
+        .catch(error => {
+          console.log(error)
+        })
     },
     createPost() {
       var title = document.getElementById('titleId').value
